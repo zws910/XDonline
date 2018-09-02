@@ -134,5 +134,9 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
 # 重载AUTH_USER_MODEL
 AUTH_USER_MODEL = 'users.UserProfile'

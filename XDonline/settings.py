@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'users',
     'course',
     'operation',
@@ -140,3 +141,8 @@ STATICFILES_DIRS = (
 
 # 重载AUTH_USER_MODEL
 AUTH_USER_MODEL = 'users.UserProfile'
+
+# 重载AUTHENTICATION_BACKENDS
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+)

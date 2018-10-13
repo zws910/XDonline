@@ -1,10 +1,35 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.backends import ModelBackend
+from django.db.models import Q
 from django.shortcuts import render
 
+from users.models import UserProfile
 
-# Create your views here.
+
+class CustomBackend(ModelBackend):
+    """
+    邮箱和用户名都可以登录
+    继承基础ModelBackend类, 因为有authenticate方法
+    """
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        try:
+            # 不希望用户存在两个，get只能有一个。两个是get失败的一种原因 Q为使用并集查询
+            user = UserProfile.objects.get(Q(username=username) | Q(email=username))
+
+            if user.check_password(password):
+                return user
+        except Exception as e:
+            print(e)
+            return None
+
+
+
+
+
+
+
 def user_login(request):
-    """用户登录"""
+    """用户名密码登录"""
     if request.method == "POST":
         # 获取用户提交的用户名和密码
         user_name = request.POST.get('username', None)

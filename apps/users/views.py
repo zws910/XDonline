@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def user_login(request):
+    """用户登录"""
     if request.method == "POST":
         # 获取用户提交的用户名和密码
         user_name = request.POST.get('username', None)
